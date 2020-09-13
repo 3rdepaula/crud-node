@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+  db:
+    image: mongo:4.2
+    container_name: db
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ./src/database:/var/www
+  api:
+    image: node:latest
+    container_name: node-back-2
+    restart: always
+    command: node src/app.js
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/etc/app
+    working_dir: /etc/app
+    depends_on:
+      - db
